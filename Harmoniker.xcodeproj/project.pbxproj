@@ -1,0 +1,322 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		636E370315A0414E004137BB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636E370215A0414E004137BB /* Cocoa.framework */; };
+		636E370D15A0414E004137BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 636E370B15A0414E004137BB /* InfoPlist.strings */; };
+		636E370F15A0414E004137BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 636E370E15A0414E004137BB /* main.m */; };
+		636E371315A0414E004137BB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 636E371115A0414E004137BB /* Credits.rtf */; };
+		636E371615A0414E004137BB /* MyTextureMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 636E371515A0414E004137BB /* MyTextureMap.m */; };
+		636E371915A0414E004137BB /* MyTextureMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 636E371715A0414E004137BB /* MyTextureMap.xib */; };
+		636E371C15A0414E004137BB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 636E371A15A0414E004137BB /* MainMenu.xib */; };
+		636E371F15A0414E004137BB /* MyTextureMap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 636E371D15A0414E004137BB /* MyTextureMap.xcdatamodeld */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		636E36FE15A0414E004137BB /* Harmoniker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Harmoniker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		636E370215A0414E004137BB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		636E370515A0414E004137BB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		636E370615A0414E004137BB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		636E370715A0414E004137BB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		636E370A15A0414E004137BB /* Harmoniker-Info.plist */ = {isa = PBXFileReference; path = "Harmoniker-Info.plist"; sourceTree = "<group>"; };
+		636E370C15A0414E004137BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		636E370E15A0414E004137BB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		636E371015A0414E004137BB /* Harmoniker-Prefix.pch */ = {isa = PBXFileReference; path = "Harmoniker-Prefix.pch"; sourceTree = "<group>"; };
+		636E371215A0414E004137BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		636E371415A0414E004137BB /* MyTextureMap.h */ = {isa = PBXFileReference; path = MyTextureMap.h; sourceTree = "<group>"; };
+		636E371515A0414E004137BB /* MyTextureMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyTextureMap.m; sourceTree = "<group>"; };
+		636E371815A0414E004137BB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyTextureMap.xib; sourceTree = "<group>"; };
+		636E371B15A0414E004137BB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		636E371E15A0414E004137BB /* MyTextureMap.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyTextureMap.xcdatamodel; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		636E36FB15A0414E004137BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				636E370315A0414E004137BB /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		636E36F315A0414C004137BB = {
+			isa = PBXGroup;
+			children = (
+				636E370815A0414E004137BB /* Harmoniker */,
+				636E370115A0414E004137BB /* Frameworks */,
+				636E36FF15A0414E004137BB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		636E36FF15A0414E004137BB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				636E36FE15A0414E004137BB /* Harmoniker.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		636E370115A0414E004137BB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				636E370215A0414E004137BB /* Cocoa.framework */,
+				636E370415A0414E004137BB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		636E370415A0414E004137BB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				636E370515A0414E004137BB /* AppKit.framework */,
+				636E370615A0414E004137BB /* CoreData.framework */,
+				636E370715A0414E004137BB /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		636E370815A0414E004137BB /* Harmoniker */ = {
+			isa = PBXGroup;
+			children = (
+				636E371415A0414E004137BB /* MyTextureMap.h */,
+				636E371515A0414E004137BB /* MyTextureMap.m */,
+				636E371715A0414E004137BB /* MyTextureMap.xib */,
+				636E371A15A0414E004137BB /* MainMenu.xib */,
+				636E371D15A0414E004137BB /* MyTextureMap.xcdatamodeld */,
+				636E370915A0414E004137BB /* Supporting Files */,
+			);
+			path = Harmoniker;
+			sourceTree = "<group>";
+		};
+		636E370915A0414E004137BB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				636E370A15A0414E004137BB /* Harmoniker-Info.plist */,
+				636E370B15A0414E004137BB /* InfoPlist.strings */,
+				636E370E15A0414E004137BB /* main.m */,
+				636E371015A0414E004137BB /* Harmoniker-Prefix.pch */,
+				636E371115A0414E004137BB /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		636E36FD15A0414E004137BB /* Harmoniker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 636E372215A0414E004137BB /* Build configuration list for PBXNativeTarget "Harmoniker" */;
+			buildPhases = (
+				636E36FA15A0414E004137BB /* Sources */,
+				636E36FB15A0414E004137BB /* Frameworks */,
+				636E36FC15A0414E004137BB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Harmoniker;
+			productName = Harmoniker;
+			productReference = 636E36FE15A0414E004137BB /* Harmoniker.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		636E36F515A0414C004137BB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "vid Games";
+			};
+			buildConfigurationList = 636E36F815A0414C004137BB /* Build configuration list for PBXProject "Harmoniker" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 636E36F315A0414C004137BB;
+			productRefGroup = 636E36FF15A0414E004137BB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				636E36FD15A0414E004137BB /* Harmoniker */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		636E36FC15A0414E004137BB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				636E370D15A0414E004137BB /* InfoPlist.strings in Resources */,
+				636E371315A0414E004137BB /* Credits.rtf in Resources */,
+				636E371915A0414E004137BB /* MyTextureMap.xib in Resources */,
+				636E371C15A0414E004137BB /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		636E36FA15A0414E004137BB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				636E370F15A0414E004137BB /* main.m in Sources */,
+				636E371615A0414E004137BB /* MyTextureMap.m in Sources */,
+				636E371F15A0414E004137BB /* MyTextureMap.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		636E370B15A0414E004137BB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				636E370C15A0414E004137BB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		636E371115A0414E004137BB /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				636E371215A0414E004137BB /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		636E371715A0414E004137BB /* MyTextureMap.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				636E371815A0414E004137BB /* en */,
+			);
+			name = MyTextureMap.xib;
+			sourceTree = "<group>";
+		};
+		636E371A15A0414E004137BB /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				636E371B15A0414E004137BB /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		636E372015A0414E004137BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		636E372115A0414E004137BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		636E372315A0414E004137BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Harmoniker/Harmoniker-Prefix.pch";
+				INFOPLIST_FILE = "Harmoniker/Harmoniker-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		636E372415A0414E004137BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Harmoniker/Harmoniker-Prefix.pch";
+				INFOPLIST_FILE = "Harmoniker/Harmoniker-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		636E36F815A0414C004137BB /* Build configuration list for PBXProject "Harmoniker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				636E372015A0414E004137BB /* Debug */,
+				636E372115A0414E004137BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		636E372215A0414E004137BB /* Build configuration list for PBXNativeTarget "Harmoniker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				636E372315A0414E004137BB /* Debug */,
+				636E372415A0414E004137BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		636E371D15A0414E004137BB /* MyTextureMap.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				636E371E15A0414E004137BB /* MyTextureMap.xcdatamodel */,
+			);
+			currentVersion = 636E371E15A0414E004137BB /* MyTextureMap.xcdatamodel */;
+			path = MyTextureMap.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 636E36F515A0414C004137BB /* Project object */;
+}
