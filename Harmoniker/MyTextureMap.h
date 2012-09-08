@@ -13,6 +13,8 @@
     IBOutlet NSImageView *imageViewFront;
     IBOutlet NSImageView *imageViewBack;
     IBOutlet NSColorWell *colorWell;
+    IBOutlet NSTextField *tfNumBands;
+    IBOutlet NSTextField *tfNumSamples;    
 }
 
 @property (retain) NSImageView *imageViewFront;
@@ -20,5 +22,7 @@
 @property (retain) NSColorWell *colorWell;
 
 - (IBAction)computeHarmonics:(id)sender;
+- (IBAction)validateNumBands:(id)sender;
+- (IBAction)validateNumSamples:(id)sender;
 
 @end

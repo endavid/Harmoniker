@@ -167,8 +167,11 @@ namespace {
 #endif
     
 #if true
+    int numBands = [tfNumBands intValue];
+    int numSamplesSqr = (int)sqrtf([tfNumBands intValue]);
+    
     // generate samples
-    vd::math::SphericalHarmonics* sh = new vd::math::SphericalHarmonics();
+    vd::math::SphericalHarmonics* sh = new vd::math::SphericalHarmonics(numBands, numSamplesSqr);
     // compute spherical harmonics
     sh->ProjectPolarFn(&polarSampler);
     
@@ -189,6 +192,23 @@ namespace {
 
     g_frontBytes = NULL;
     g_backBytes = NULL;
+}
+
+-(IBAction)validateNumBands:(id)sender{
+    int value = [tfNumBands intValue];
+    if (value <= 0) {
+        value = 1;
+    }
+    [tfNumBands setStringValue:[NSString stringWithFormat:@"%d",value]];
+}
+-(IBAction)validateNumSamples:(id)sender{
+    int value = [tfNumSamples intValue];
+    if (value <= 0) {
+        value = 1;
+    }
+    value = (int)sqrtf(value);
+    value *= value; 
+    [tfNumSamples setStringValue:[NSString stringWithFormat:@"%d",value]];
 }
 
 //CFDataRef CopyImagePixels(CGImageRef inImage) {     return CGDataProviderCopyData(CGImageGetDataProvider(inImage)); }
