@@ -40,12 +40,13 @@ namespace {
         float v = theta * vd::math::PI_INV; // 0..1
         // for color normalization
         float s = 1.f/256.f;
+        
         // choose hemisphere
         if (u < 1.f) { // front
             // UV to pixel coordinates
             int y = (int)vd::math::Min(g_frontHeight-1, floorf(g_frontHeight*v));
             int x = (int)vd::math::Min(g_frontWidth-1, floorf(g_frontWidth*u));
-            int i = g_frontStride*g_frontWidth*y + x;
+            int i = g_frontStride*(g_frontWidth*y + x);
             float r = g_frontBytes[i];
             float g = g_frontBytes[i+1];
             float b = g_frontBytes[i+2];
@@ -55,7 +56,7 @@ namespace {
             u = u - 1.f;
             int y = (int)vd::math::Min(g_backHeight-1, floorf(g_backHeight*v));
             int x = (int)vd::math::Min(g_backWidth-1, floorf(g_backWidth*u));
-            int i = g_backStride*g_backWidth*y + x;
+            int i = g_backStride*(g_backWidth*y + x);
             float r = g_backBytes[i];
             float g = g_backBytes[i+1];
             float b = g_backBytes[i+2];
