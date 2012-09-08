@@ -14,6 +14,7 @@
 
 @synthesize imageViewFront;
 @synthesize imageViewBack;
+@synthesize colorWell;
 
 namespace {
     size_t g_frontWidth = 0;
@@ -176,7 +177,14 @@ namespace {
     for (int i=0; i<sh->GetNumCoeffs(); ++i) {
         NSLog(@"%d: (%3.4f,%3.4f,%3.4f)", i, coeff[i].GetX(), coeff[i].GetY(), coeff[i].GetZ());
     }
-#endif    
+    
+    // debug band 0 coefficients
+    float r = coeff[0].GetX() * vd::math::PI_INV;
+    float g = coeff[0].GetY() * vd::math::PI_INV;
+    float b = coeff[0].GetZ() * vd::math::PI_INV;
+    [colorWell setColor:[NSColor colorWithSRGBRed:r green:g blue:b alpha:1.0f]];
+    
+#endif
 
     g_frontBytes = NULL;
     g_backBytes = NULL;
