@@ -11,10 +11,18 @@
 		636E370D15A0414E004137BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 636E370B15A0414E004137BB /* InfoPlist.strings */; };
 		636E370F15A0414E004137BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 636E370E15A0414E004137BB /* main.m */; };
 		636E371315A0414E004137BB /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 636E371115A0414E004137BB /* Credits.rtf */; };
-		636E371615A0414E004137BB /* MyTextureMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 636E371515A0414E004137BB /* MyTextureMap.m */; };
 		636E371915A0414E004137BB /* MyTextureMap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 636E371715A0414E004137BB /* MyTextureMap.xib */; };
 		636E371C15A0414E004137BB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 636E371A15A0414E004137BB /* MainMenu.xib */; };
 		636E371F15A0414E004137BB /* MyTextureMap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 636E371D15A0414E004137BB /* MyTextureMap.xcdatamodeld */; };
+		638FACD515F3580D0074C744 /* MyTextureMap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 638FACCD15F3580D0074C744 /* MyTextureMap.xcdatamodeld */; };
+		638FACE415F358AF0074C744 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 638FACD915F358AF0074C744 /* Matrix.cpp */; };
+		638FACE515F358AF0074C744 /* Quaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 638FACDB15F358AF0074C744 /* Quaternion.cpp */; };
+		638FACE615F358AF0074C744 /* Spherical.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 638FACDD15F358AF0074C744 /* Spherical.cpp */; };
+		638FACE715F358AF0074C744 /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 638FACE015F358AF0074C744 /* Transform.cpp */; };
+		638FACE815F358AF0074C744 /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 638FACE215F358AF0074C744 /* Vector.cpp */; };
+		638FACEA15F35FB60074C744 /* SphericalHarmonics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 638FACE915F35FB60074C744 /* SphericalHarmonics.cpp */; };
+		638FACEC15F361D70074C744 /* Common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 638FACEB15F361D70074C744 /* Common.cpp */; };
+		638FACFA15FAD4FC0074C744 /* MyTextureMap.mm in Sources */ = {isa = PBXBuildFile; fileRef = 638FACF915FAD4FC0074C744 /* MyTextureMap.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,16 +31,32 @@
 		636E370515A0414E004137BB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		636E370615A0414E004137BB /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		636E370715A0414E004137BB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		636E370A15A0414E004137BB /* Harmoniker-Info.plist */ = {isa = PBXFileReference; path = "Harmoniker-Info.plist"; sourceTree = "<group>"; };
+		636E370A15A0414E004137BB /* Harmoniker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Harmoniker-Info.plist"; sourceTree = "<group>"; };
 		636E370C15A0414E004137BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		636E370E15A0414E004137BB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		636E371015A0414E004137BB /* Harmoniker-Prefix.pch */ = {isa = PBXFileReference; path = "Harmoniker-Prefix.pch"; sourceTree = "<group>"; };
+		636E371015A0414E004137BB /* Harmoniker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Harmoniker-Prefix.pch"; sourceTree = "<group>"; };
 		636E371215A0414E004137BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		636E371415A0414E004137BB /* MyTextureMap.h */ = {isa = PBXFileReference; path = MyTextureMap.h; sourceTree = "<group>"; };
-		636E371515A0414E004137BB /* MyTextureMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyTextureMap.m; sourceTree = "<group>"; };
 		636E371815A0414E004137BB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyTextureMap.xib; sourceTree = "<group>"; };
 		636E371B15A0414E004137BB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		636E371E15A0414E004137BB /* MyTextureMap.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyTextureMap.xcdatamodel; sourceTree = "<group>"; };
+		638FACCB15F3580D0074C744 /* MyTextureMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTextureMap.h; sourceTree = "<group>"; };
+		638FACCE15F3580D0074C744 /* MyTextureMap.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyTextureMap.xcdatamodel; sourceTree = "<group>"; };
+		638FACD715F358AF0074C744 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		638FACD815F358AF0074C744 /* math_def.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math_def.h; sourceTree = "<group>"; };
+		638FACD915F358AF0074C744 /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
+		638FACDA15F358AF0074C744 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
+		638FACDB15F358AF0074C744 /* Quaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quaternion.cpp; sourceTree = "<group>"; };
+		638FACDC15F358AF0074C744 /* Quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quaternion.h; sourceTree = "<group>"; };
+		638FACDD15F358AF0074C744 /* Spherical.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Spherical.cpp; sourceTree = "<group>"; };
+		638FACDE15F358AF0074C744 /* Spherical.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spherical.h; sourceTree = "<group>"; };
+		638FACDF15F358AF0074C744 /* SphericalHarmonics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SphericalHarmonics.h; sourceTree = "<group>"; };
+		638FACE015F358AF0074C744 /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Transform.cpp; sourceTree = "<group>"; };
+		638FACE115F358AF0074C744 /* Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transform.h; sourceTree = "<group>"; };
+		638FACE215F358AF0074C744 /* Vector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector.cpp; sourceTree = "<group>"; };
+		638FACE315F358AF0074C744 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		638FACE915F35FB60074C744 /* SphericalHarmonics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SphericalHarmonics.cpp; sourceTree = "<group>"; };
+		638FACEB15F361D70074C744 /* Common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Common.cpp; sourceTree = "<group>"; };
+		638FACF915FAD4FC0074C744 /* MyTextureMap.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyTextureMap.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,8 +110,10 @@
 		636E370815A0414E004137BB /* Harmoniker */ = {
 			isa = PBXGroup;
 			children = (
-				636E371415A0414E004137BB /* MyTextureMap.h */,
-				636E371515A0414E004137BB /* MyTextureMap.m */,
+				638FACCB15F3580D0074C744 /* MyTextureMap.h */,
+				638FACF915FAD4FC0074C744 /* MyTextureMap.mm */,
+				638FACD615F358AF0074C744 /* math */,
+				638FACCD15F3580D0074C744 /* MyTextureMap.xcdatamodeld */,
 				636E371715A0414E004137BB /* MyTextureMap.xib */,
 				636E371A15A0414E004137BB /* MainMenu.xib */,
 				636E371D15A0414E004137BB /* MyTextureMap.xcdatamodeld */,
@@ -106,6 +132,28 @@
 				636E371115A0414E004137BB /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		638FACD615F358AF0074C744 /* math */ = {
+			isa = PBXGroup;
+			children = (
+				638FACD715F358AF0074C744 /* Common.h */,
+				638FACEB15F361D70074C744 /* Common.cpp */,
+				638FACD815F358AF0074C744 /* math_def.h */,
+				638FACD915F358AF0074C744 /* Matrix.cpp */,
+				638FACDA15F358AF0074C744 /* Matrix.h */,
+				638FACDB15F358AF0074C744 /* Quaternion.cpp */,
+				638FACDC15F358AF0074C744 /* Quaternion.h */,
+				638FACDD15F358AF0074C744 /* Spherical.cpp */,
+				638FACDE15F358AF0074C744 /* Spherical.h */,
+				638FACDF15F358AF0074C744 /* SphericalHarmonics.h */,
+				638FACE915F35FB60074C744 /* SphericalHarmonics.cpp */,
+				638FACE015F358AF0074C744 /* Transform.cpp */,
+				638FACE115F358AF0074C744 /* Transform.h */,
+				638FACE215F358AF0074C744 /* Vector.cpp */,
+				638FACE315F358AF0074C744 /* Vector.h */,
+			);
+			path = math;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,8 +221,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				636E370F15A0414E004137BB /* main.m in Sources */,
-				636E371615A0414E004137BB /* MyTextureMap.m in Sources */,
 				636E371F15A0414E004137BB /* MyTextureMap.xcdatamodeld in Sources */,
+				638FACD515F3580D0074C744 /* MyTextureMap.xcdatamodeld in Sources */,
+				638FACE415F358AF0074C744 /* Matrix.cpp in Sources */,
+				638FACE515F358AF0074C744 /* Quaternion.cpp in Sources */,
+				638FACE615F358AF0074C744 /* Spherical.cpp in Sources */,
+				638FACE715F358AF0074C744 /* Transform.cpp in Sources */,
+				638FACE815F358AF0074C744 /* Vector.cpp in Sources */,
+				638FACEA15F35FB60074C744 /* SphericalHarmonics.cpp in Sources */,
+				638FACEC15F361D70074C744 /* Common.cpp in Sources */,
+				638FACFA15FAD4FC0074C744 /* MyTextureMap.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +324,7 @@
 				GCC_PREFIX_HEADER = "Harmoniker/Harmoniker-Prefix.pch";
 				INFOPLIST_FILE = "Harmoniker/Harmoniker-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "Harmoniker/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -279,6 +336,7 @@
 				GCC_PREFIX_HEADER = "Harmoniker/Harmoniker-Prefix.pch";
 				INFOPLIST_FILE = "Harmoniker/Harmoniker-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "Harmoniker/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -302,6 +360,7 @@
 				636E372415A0414E004137BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
@@ -312,6 +371,16 @@
 				636E371E15A0414E004137BB /* MyTextureMap.xcdatamodel */,
 			);
 			currentVersion = 636E371E15A0414E004137BB /* MyTextureMap.xcdatamodel */;
+			path = MyTextureMap.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		638FACCD15F3580D0074C744 /* MyTextureMap.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				638FACCE15F3580D0074C744 /* MyTextureMap.xcdatamodel */,
+			);
+			currentVersion = 638FACCE15F3580D0074C744 /* MyTextureMap.xcdatamodel */;
 			path = MyTextureMap.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
