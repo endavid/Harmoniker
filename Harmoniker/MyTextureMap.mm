@@ -12,8 +12,10 @@
 
 @implementation MyTextureMap
 
+
 @synthesize imageViewFront;
 @synthesize imageViewBack;
+@synthesize imageViewIrradiance;
 @synthesize colorWell;
 
 namespace {
@@ -25,6 +27,10 @@ namespace {
     size_t g_backStride = 4;
     const UInt8* g_frontBytes = NULL;
     const UInt8* g_backBytes = NULL;
+    
+    const int IRRADIANCE_W = 32;
+    const int IRRADIANCE_H = 32;
+    const int IRRADIANCE_BANDS = 3;     ///< R,G,B
     
     /**
      *  This sampler function uses 2 images as if they were projections on the front
@@ -46,7 +52,7 @@ namespace {
             // UV to pixel coordinates
             int y = (int)vd::math::Min(g_frontHeight-1, floorf(g_frontHeight*v));
             int x = (int)vd::math::Min(g_frontWidth-1, floorf(g_frontWidth*u));
-            int i = g_frontStride*(g_frontWidth*y + x);
+            int i = (int)(g_frontStride*(g_frontWidth*y + x));
             float r = g_frontBytes[i];
             float g = g_frontBytes[i+1];
             float b = g_frontBytes[i+2];
@@ -56,11 +62,59 @@ namespace {
             u = u - 1.f;
             int y = (int)vd::math::Min(g_backHeight-1, floorf(g_backHeight*v));
             int x = (int)vd::math::Min(g_backWidth-1, floorf(g_backWidth*u));
-            int i = g_backStride*(g_backWidth*y + x);
+            int i = (int)(g_backStride*(g_backWidth*y + x));
             float r = g_backBytes[i];
             float g = g_backBytes[i+1];
             float b = g_backBytes[i+2];
             return vd::math::Vector3(s*r, s*g, s*b);
+        }
+    } // polarSampler
+    
+    /** Saves image to disk
+     *  @see http://stackoverflow.com/questions/1320988/saving-cgimageref-to-a-png-file
+     */
+    void CGImageWriteToFile(CGImageRef image, NSURL *filename) {
+        CFURLRef url = (CFURLRef)filename;
+        CGImageDestinationRef destination = CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
+        CGImageDestinationAddImage(destination, image, nil);
+        
+        if (!CGImageDestinationFinalize(destination)) {
+            NSLog(@"Failed to write image to %@", [filename absoluteString]);
+        }
+        
+        CFRelease(destination);
+    }
+    
+    /** 
+     * @brief Creates a map of sphere coordinates on 2D
+     * Y axis is defined with respect to the center of the image, being 1 at the center, 0 at radius = 0.7, and -1 if radius >= 1.
+     */
+    void initSphereMap(unsigned char* buffer, int width, int height, int bytesPerPixel) {
+        float hInv = 1.0f/(float)height;
+        float wInv = 1.0f/(float)width;
+        for (int j = 0; j<height; ++j) {
+            const float v = 2.f * (j+0.5f) * hInv - 1.f;
+            for (int i = 0; i<width; ++i) {
+                const float u = 2.f * (i+0.5f) * wInv - 1.f;
+                float x = u;
+                float z = v;
+                float radius = sqrtf(x * x + z * z);
+                float y = 1.0f - 2.f * radius;
+                if (y < -1.f) y = -1.f;
+                // normalize x, z (no div by zero, since never in the center for even sizes)
+                float rInv = 1.0f/radius;
+                radius = sqrtf(1.0f-y*y);
+                x = radius * x * rInv;
+                z = radius * z * rInv;
+                // Vector3(x,y,z)
+                // for debugging
+                x = 127.5f * x + 127.5f;
+                y = 127.5f * y + 127.5f;
+                z = 127.5f * z + 127.5f;
+                buffer[i*bytesPerPixel+bytesPerPixel*width*j] = (unsigned char)x;
+                buffer[i*bytesPerPixel+bytesPerPixel*width*j+1] = (unsigned char)y;
+                buffer[i*bytesPerPixel+bytesPerPixel*width*j+2] = (unsigned char)z;
+            }
         }
     }
     
@@ -87,9 +141,30 @@ namespace {
 {
     [super windowControllerDidLoadNib:aController];
     // Add any code here that needs to be executed once the windowController has loaded the document's window.
-    //if (self.imageFront != nil) {
-    //    [imageViewFront setImage:self.imageFront];
-    //}
+}
+
+/// Initialization code that needs the instantiated IBOutlets (before this function is called, they are still nil!)
+-(void)awakeFromNib {
+    if (self.imageViewIrradiance != nil) {
+        CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();
+        size_t bufferLength = IRRADIANCE_W * IRRADIANCE_H * IRRADIANCE_BANDS;
+        unsigned char *buffer = (unsigned char*)malloc(bufferLength);
+        memset(buffer, 0, bufferLength);
+        initSphereMap(buffer, IRRADIANCE_W, IRRADIANCE_H, IRRADIANCE_BANDS);
+        
+        CGDataProviderRef provider =
+        CGDataProviderCreateWithData(NULL, buffer, bufferLength, NULL);//freeBitmapBuffer);
+        
+        imgIrradiance = CGImageCreate(IRRADIANCE_W, IRRADIANCE_H, 8, 8 * IRRADIANCE_BANDS, IRRADIANCE_W * IRRADIANCE_BANDS, rgb, kCGBitmapByteOrderDefault, provider, NULL /*decode*/, false /*shouldInterpolate*/, kCGRenderingIntentDefault);
+        
+        NSImage *img = [[NSImage alloc] initWithCGImage: imgIrradiance size:NSZeroSize];
+        [imageViewIrradiance setImage:img];
+        
+        CGDataProviderRelease(provider);
+        CGColorSpaceRelease(rgb);
+        
+        //CGImageRelease(imageRef);
+    }
 }
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError {
@@ -175,6 +250,7 @@ namespace {
     // compute spherical harmonics
     sh->ProjectPolarFn(&polarSampler);
     
+    //[shTable insertValue:[NSString stringWithFormat:@"test"] inPropertyWithKey:@"Index"];
     
     // Output coefficients
     const vd::math::Vector3* coeff = sh->GetCoeffs();
@@ -209,6 +285,16 @@ namespace {
     value = (int)sqrtf(value);
     value *= value; 
     [tfNumSamples setStringValue:[NSString stringWithFormat:@"%d",value]];
+}
+-(IBAction)saveIrradiance:(id)sender{
+    // Create the File Save Dialog class.
+    NSSavePanel* saveDlg = [NSSavePanel savePanel];
+        
+    // Display the dialog.  If the OK button was pressed, save
+    if ( [saveDlg runModal] == NSOKButton ) {
+        NSURL* file = [saveDlg URL];
+        CGImageWriteToFile(imgIrradiance, file);
+    }
 }
 
 //CFDataRef CopyImagePixels(CGImageRef inImage) {     return CGDataProviderCopyData(CGImageGetDataProvider(inImage)); }

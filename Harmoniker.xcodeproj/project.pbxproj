@@ -182,6 +182,7 @@
 		636E36F515A0414C004137BB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "vid Games";
 			};
 			buildConfigurationList = 636E36F815A0414C004137BB /* Build configuration list for PBXProject "Harmoniker" */;
@@ -320,6 +321,7 @@
 		636E372315A0414E004137BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Harmoniker/Harmoniker-Prefix.pch";
 				INFOPLIST_FILE = "Harmoniker/Harmoniker-Info.plist";
@@ -332,6 +334,7 @@
 		636E372415A0414E004137BB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Harmoniker/Harmoniker-Prefix.pch";
 				INFOPLIST_FILE = "Harmoniker/Harmoniker-Info.plist";
