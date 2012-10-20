@@ -157,9 +157,9 @@ void SphericalHarmonics::computeIrradianceApproximationMatrices()
         // not enough coefficients!
         return;
     }
-    const float a0 = 1.0f;
-    const float a1 = 2.0f/3.0f;
-    const float a2 = 1.0f/4.0f;
+    const float a0 = math::PI * 1.0f;
+    const float a1 = math::PI * 2.0f/3.0f;
+    const float a2 = math::PI * 1.0f/4.0f;
     const float k0 = (1.0f/4.0f) * sqrtf(15.f/math::PI) * a2;
     const float k1 = (1.0f/4.0f) * sqrtf(3.f/math::PI) * a1;
     const float k2 = (1.0f/2.0f) * sqrtf(1.f/math::PI) * a0;

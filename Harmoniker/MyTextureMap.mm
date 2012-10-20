@@ -46,7 +46,7 @@ namespace {
         float u = phi * vd::math::PI_INV;   // 0..2
         float v = theta * vd::math::PI_INV; // 0..1
         // for color normalization
-        float s = 1.f/256.f;
+        float s = 1.f/255.f;
         
         // choose hemisphere
         if (u < 1.f) { // front
@@ -89,6 +89,7 @@ namespace {
     /** 
      * @brief Creates a map of sphere coordinates on 2D
      * Y axis is defined with respect to the center of the image, being 1 at the center, 0 at radius = 0.7, and -1 if radius >= 1.
+     * TODO: convert linear color to sRGB
      */
     void initSphereMap(unsigned char* buffer, int width, int height, int bytesPerPixel, vd::math::SphericalHarmonics* sh = NULL) {
         float hInv = 1.0f/(float)height;
@@ -110,7 +111,7 @@ namespace {
                 
                 if ( sh!= NULL ) {
                     // get irradiance for given direction
-                    vd::math::Vector3 n(x,y,z);
+                    vd::math::Vector3 n(x,z,y);
                     vd::math::Vector3 irradiance = sh->GetIrradianceApproximation(n);
                     x = 255.f * vd::math::Clamp(irradiance.GetX() * vd::math::PI_INV, 0.f, 1.f);
                     y = 255.f * vd::math::Clamp(irradiance.GetY() * vd::math::PI_INV, 0.f, 1.f);
@@ -260,7 +261,7 @@ namespace {
     
 #if true
     int numBands = [tfNumBands intValue];
-    int numSamplesSqr = (int)sqrtf([tfNumBands intValue]);
+    int numSamplesSqr = (int)sqrtf([tfNumSamples intValue]);
     
     // generate samples
     vd::math::SphericalHarmonics* sh = new vd::math::SphericalHarmonics(numBands, numSamplesSqr);
