@@ -141,10 +141,66 @@ Vector3* SphericalHarmonics::ProjectPolarFn(polarFn fn)
     for(int i=0; i<m_numCoeffs; ++i) {
         m_pCoeffs[i] *= (float)factor;
     }
+    
+    // compute matrices for later
+    computeIrradianceApproximationMatrices();
+    
     return m_pCoeffs;
 }
 
+/**
+ * @see "An efficient representation for Irradiance Environment Maps"
+ */
+void SphericalHarmonics::computeIrradianceApproximationMatrices()
+{
+    if (m_numBands < 3) {
+        // not enough coefficients!
+        return;
+    }
+    const float a0 = 1.0f;
+    const float a1 = 2.0f/3.0f;
+    const float a2 = 1.0f/4.0f;
+    const float k0 = (1.0f/4.0f) * sqrtf(15.f/math::PI) * a2;
+    const float k1 = (1.0f/4.0f) * sqrtf(3.f/math::PI) * a1;
+    const float k2 = (1.0f/2.0f) * sqrtf(1.f/math::PI) * a0;
+    const float k3 = (1.0f/4.0f) * sqrtf(5.f/math::PI) * a2;
+    
+    // m_pCoeffs: L00, L1-1, L10, L11, L2-2, L2-1, L20, L21, L22
+    
+    // for every color channel
+    for (int i = 0; i<3; ++i) {
+        m_mIrradiance[i](0,0) = k0 * m_pCoeffs[8](i);
+        m_mIrradiance[i](0,1) = k0 * m_pCoeffs[4](i);
+        m_mIrradiance[i](0,2) = k0 * m_pCoeffs[7](i);
+        m_mIrradiance[i](0,3) = k1 * m_pCoeffs[3](i);
+        m_mIrradiance[i](1,0) = k0 * m_pCoeffs[4](i);
+        m_mIrradiance[i](1,1) = k0 * m_pCoeffs[8](i);
+        m_mIrradiance[i](1,2) = k0 * m_pCoeffs[5](i);
+        m_mIrradiance[i](1,3) = k1 * m_pCoeffs[1](i);
+        m_mIrradiance[i](2,0) = k0 * m_pCoeffs[7](i);
+        m_mIrradiance[i](2,1) = k0 * m_pCoeffs[3](i);
+        m_mIrradiance[i](2,2) = 3.f * k3 * m_pCoeffs[6](i);
+        m_mIrradiance[i](2,3) = k1 * m_pCoeffs[2](i);
+        m_mIrradiance[i](3,0) = k1 * m_pCoeffs[3](i);
+        m_mIrradiance[i](3,1) = k1 * m_pCoeffs[1](i);
+        m_mIrradiance[i](3,2) = k1 * m_pCoeffs[2](i);
+        m_mIrradiance[i](3,3) = k2 * m_pCoeffs[0](i) - k3 * m_pCoeffs[6](i);
+    }
+}
 
+/**
+ * Computes the approximate irradiance for the given normal direction
+ */
+Vector3 SphericalHarmonics::GetIrradianceApproximation(const vd::math::Vector3 &normal)
+{
+    Vector3 v(0);
+    Vector4 n(normal,1);
+    // for every color channel
+    for (int i = 0; i<3; ++i) {
+        v(i) = Dot(n, m_mIrradiance[i] * n);
+    }
+    return v;
+}
 
 MATH_NS_END
 

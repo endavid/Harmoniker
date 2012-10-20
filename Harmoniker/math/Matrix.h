@@ -58,6 +58,12 @@ class Matrix4 {
 public:
     static inline const Matrix4 Identity();
 public:
+    Matrix4() {
+        m_col[0] = Vector4(0);
+        m_col[1] = Vector4(0);
+        m_col[2] = Vector4(0);
+        m_col[3] = Vector4(0);
+    }
     Matrix4(const float value)  {
         m_col[0] = Vector4(value);
         m_col[1] = Vector4(value);
@@ -81,6 +87,7 @@ public:
     }
     /// operators
     inline Matrix4 operator*(const Matrix4& rhs) const;
+    inline Vector4 operator*(const Vector4& rhs) const;
     inline const float* GetAsArray() const;
     inline float* GetAsArray();
 
@@ -180,6 +187,17 @@ inline Matrix4 Matrix4::operator*(const Matrix4& rhs) const {
     return m;
 }
 
+/// Vector multiplication
+inline Vector4 Matrix4::operator*(const Vector4& rhs) const {
+    Vector4 v(0);
+    
+    v(0) = (*this)(0,0)*rhs(0)+(*this)(0,1)*rhs(1)+(*this)(0,2)*rhs(2)+(*this)(0,3)*rhs(3);
+    v(1) = (*this)(1,0)*rhs(0)+(*this)(1,1)*rhs(1)+(*this)(1,2)*rhs(2)+(*this)(1,3)*rhs(3);
+    v(2) = (*this)(2,0)*rhs(0)+(*this)(2,1)*rhs(1)+(*this)(2,2)*rhs(2)+(*this)(2,3)*rhs(3);
+    v(3) = (*this)(3,0)*rhs(0)+(*this)(3,1)*rhs(1)+(*this)(3,2)*rhs(2)+(*this)(3,3)*rhs(3);
+
+    return v;
+}
 
 const float* Matrix4::GetAsArray() const {
     return m_col[0].GetAsArray();

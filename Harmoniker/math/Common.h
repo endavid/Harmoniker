@@ -36,6 +36,10 @@ inline float Max(const float a, const float b) {
 inline float Min(const float a, const float b) {
     return (a<=b)?a:b;
 }
+/// Clamp
+inline float Clamp(const float value, const float lowest, const float highest) {
+    return (value<lowest)?lowest:(value>highest)?highest:value;
+}
 /// Random number between 0 and 1
 inline float Randf() {
     return (random()%1001) / 1000.0f;

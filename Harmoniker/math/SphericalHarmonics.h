@@ -12,6 +12,7 @@
 
 #include "math/Common.h"
 #include "math/Vector.h"
+#include "math/Matrix.h"
 #include "math/Spherical.h"
 
 MATH_NS_BEGIN
@@ -44,6 +45,8 @@ public:
     
     // projects a polar function and computes the SH Coeffs
     Vector3* ProjectPolarFn(polarFn fn);
+    // given a normal vector, retrieves the irradiance value
+    Vector3 GetIrradianceApproximation(const Vector3& normal);
     
     // Associated Legendre Polynomial
     static double P(int l,int m,double x);
@@ -53,13 +56,15 @@ public:
     
 private:
     void setupSphericalSamples(SHSample samples[], int sqrt_n_samples);
+    void computeIrradianceApproximationMatrices();
     
 private:
-    SHSample*   m_pSamples;     ///< SHSamples
-    int         m_numBands;     ///< Number of bands
-    int         m_numCoeffs;    ///< Number of coeffs
-    int         m_numSamples;   ///< Number of samples
-    Vector3*    m_pCoeffs;      ///< SH Coefficients (result)
+    SHSample*   m_pSamples;         ///< SHSamples
+    int         m_numBands;         ///< Number of bands
+    int         m_numCoeffs;        ///< Number of coeffs
+    int         m_numSamples;       ///< Number of samples
+    Vector3*    m_pCoeffs;          ///< SH Coefficients (result)
+    Matrix4     m_mIrradiance[3];   ///< Matrices used to approximate irradiance
     
 }; // SphericalHarmonics
 

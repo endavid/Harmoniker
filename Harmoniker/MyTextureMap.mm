@@ -27,6 +27,7 @@ namespace {
     size_t g_backStride = 4;
     const UInt8* g_frontBytes = NULL;
     const UInt8* g_backBytes = NULL;
+    unsigned char* g_imgBuffer = NULL;
     
     const int IRRADIANCE_W = 32;
     const int IRRADIANCE_H = 32;
@@ -89,7 +90,7 @@ namespace {
      * @brief Creates a map of sphere coordinates on 2D
      * Y axis is defined with respect to the center of the image, being 1 at the center, 0 at radius = 0.7, and -1 if radius >= 1.
      */
-    void initSphereMap(unsigned char* buffer, int width, int height, int bytesPerPixel) {
+    void initSphereMap(unsigned char* buffer, int width, int height, int bytesPerPixel, vd::math::SphericalHarmonics* sh = NULL) {
         float hInv = 1.0f/(float)height;
         float wInv = 1.0f/(float)width;
         for (int j = 0; j<height; ++j) {
@@ -106,11 +107,20 @@ namespace {
                 radius = sqrtf(1.0f-y*y);
                 x = radius * x * rInv;
                 z = radius * z * rInv;
-                // Vector3(x,y,z)
-                // for debugging
-                x = 127.5f * x + 127.5f;
-                y = 127.5f * y + 127.5f;
-                z = 127.5f * z + 127.5f;
+                
+                if ( sh!= NULL ) {
+                    // get irradiance for given direction
+                    vd::math::Vector3 n(x,y,z);
+                    vd::math::Vector3 irradiance = sh->GetIrradianceApproximation(n);
+                    x = 255.f * vd::math::Clamp(irradiance.GetX() * vd::math::PI_INV, 0.f, 1.f);
+                    y = 255.f * vd::math::Clamp(irradiance.GetY() * vd::math::PI_INV, 0.f, 1.f);
+                    z = 255.f * vd::math::Clamp(irradiance.GetZ() * vd::math::PI_INV, 0.f, 1.f);
+                } else {
+                    // for debugging
+                    x = 127.5f * x + 127.5f;
+                    y = 127.5f * y + 127.5f;
+                    z = 127.5f * z + 127.5f;
+                }
                 buffer[i*bytesPerPixel+bytesPerPixel*width*j] = (unsigned char)x;
                 buffer[i*bytesPerPixel+bytesPerPixel*width*j+1] = (unsigned char)y;
                 buffer[i*bytesPerPixel+bytesPerPixel*width*j+2] = (unsigned char)z;
@@ -146,25 +156,32 @@ namespace {
 /// Initialization code that needs the instantiated IBOutlets (before this function is called, they are still nil!)
 -(void)awakeFromNib {
     if (self.imageViewIrradiance != nil) {
-        CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();
         size_t bufferLength = IRRADIANCE_W * IRRADIANCE_H * IRRADIANCE_BANDS;
-        unsigned char *buffer = (unsigned char*)malloc(bufferLength);
-        memset(buffer, 0, bufferLength);
-        initSphereMap(buffer, IRRADIANCE_W, IRRADIANCE_H, IRRADIANCE_BANDS);
+        g_imgBuffer = (unsigned char*)malloc(bufferLength);
+        memset(g_imgBuffer, 0, bufferLength);
         
-        CGDataProviderRef provider =
-        CGDataProviderCreateWithData(NULL, buffer, bufferLength, NULL);//freeBitmapBuffer);
-        
-        imgIrradiance = CGImageCreate(IRRADIANCE_W, IRRADIANCE_H, 8, 8 * IRRADIANCE_BANDS, IRRADIANCE_W * IRRADIANCE_BANDS, rgb, kCGBitmapByteOrderDefault, provider, NULL /*decode*/, false /*shouldInterpolate*/, kCGRenderingIntentDefault);
-        
-        NSImage *img = [[NSImage alloc] initWithCGImage: imgIrradiance size:NSZeroSize];
-        [imageViewIrradiance setImage:img];
-        
-        CGDataProviderRelease(provider);
-        CGColorSpaceRelease(rgb);
-        
-        //CGImageRelease(imageRef);
+        initSphereMap(g_imgBuffer, IRRADIANCE_W, IRRADIANCE_H, IRRADIANCE_BANDS);
+        [self updateImgIrradiance];
     }
+}
+
+-(void)updateImgIrradiance {
+    CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();
+    size_t bufferLength = IRRADIANCE_W * IRRADIANCE_H * IRRADIANCE_BANDS;
+    
+    CGDataProviderRef provider =
+    CGDataProviderCreateWithData(NULL, g_imgBuffer, bufferLength, NULL);//freeBitmapBuffer);
+    
+    imgIrradiance = CGImageCreate(IRRADIANCE_W, IRRADIANCE_H, 8, 8 * IRRADIANCE_BANDS, IRRADIANCE_W * IRRADIANCE_BANDS, rgb, kCGBitmapByteOrderDefault, provider, NULL /*decode*/, false /*shouldInterpolate*/, kCGRenderingIntentDefault);
+    
+    NSImage *img = [[NSImage alloc] initWithCGImage: imgIrradiance size:NSZeroSize];
+    [imageViewIrradiance setImage:img];
+    
+    CGDataProviderRelease(provider);
+    CGColorSpaceRelease(rgb);
+    
+    //CGImageRelease(imageRef);
+    
 }
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError {
@@ -264,6 +281,10 @@ namespace {
     float b = coeff[0].GetZ() * vd::math::PI_INV;
     [colorWell setColor:[NSColor colorWithSRGBRed:r green:g blue:b alpha:1.0f]];
     
+    // update sphere map
+    initSphereMap(g_imgBuffer, IRRADIANCE_W, IRRADIANCE_H, IRRADIANCE_BANDS, sh);
+    [self updateImgIrradiance];
+
 #endif
 
     g_frontBytes = NULL;
@@ -295,6 +316,12 @@ namespace {
         NSURL* file = [saveDlg URL];
         CGImageWriteToFile(imgIrradiance, file);
     }
+}
+
+- (void)dealloc {
+    free(g_imgBuffer);
+    g_imgBuffer = NULL;
+    [super dealloc];
 }
 
 //CFDataRef CopyImagePixels(CGImageRef inImage) {     return CGDataProviderCopyData(CGImageGetDataProvider(inImage)); }
