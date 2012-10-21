@@ -8,6 +8,7 @@
 
 #import "MyTextureMap.h"
 #include "math/SphericalHarmonics.h"
+#include "gfx/Color.h"
 
 
 @implementation MyTextureMap
@@ -19,8 +20,6 @@
 @synthesize colorWell;
 
 namespace {
-    const double SRGB_GAMMA = 2.4;
-    
     size_t g_frontWidth = 0;
     size_t g_frontHeight = 0;
     size_t g_frontStride = 4;
@@ -35,29 +34,7 @@ namespace {
     const int IRRADIANCE_H = 32;
     const int IRRADIANCE_BANDS = 3;     ///< R,G,B
     
-    
-    /// Converts sRGB to linear color space
-    vd::math::Vector3 sRGBtoRGB(const vd::math::Vector3& c) {
-        vd::math::Vector3 v(0);
-        for (int i=0; i<3; ++i) {
-            if ( c(i) > 0.04045 ) v(i) =(float)pow((c(i)+0.055)/1.055, SRGB_GAMMA);
-            else v(i) = (c(i) / 12.92f);
-        }
-		return v;
-	}
-    
-    /// Converts linear RGB to sRGB gamma space
-    vd::math::Vector3 RGBtosRGB(const vd::math::Vector3& c) {
-        vd::math::Vector3 v(0);
-        for (int i=0; i<3; ++i) {
-            if ( c(i) > 0.00304f )
-                v(i) =(float) (1.055 * pow(c(i),(1.0/SRGB_GAMMA)) - 0.055);
-            else
-                v(i) = (float)(12.92 * c(i));
-        }
-		return v;
-	}
-    
+        
     /**
      *  This sampler function uses 2 images as if they were projections on the front
      *  and back hemispheres of a light probe.
@@ -70,8 +47,6 @@ namespace {
         // spherical to UV
         float u = phi * vd::math::PI_INV;   // 0..2
         float v = theta * vd::math::PI_INV; // 0..1
-        // for color normalization
-        float s = 1.f/255.f;
         
         // choose hemisphere
         if (u < 1.f) { // front
@@ -79,22 +54,17 @@ namespace {
             int y = (int)vd::math::Min(g_frontHeight-1, floorf(g_frontHeight*v));
             int x = (int)vd::math::Min(g_frontWidth-1, floorf(g_frontWidth*u));
             int i = (int)(g_frontStride*(g_frontWidth*y + x));
-            float r = g_frontBytes[i];
-            float g = g_frontBytes[i+1];
-            float b = g_frontBytes[i+2];
-            vd::math::Vector3 color(s*r, s*g, s*b);
-            return sRGBtoRGB(color);
+            
+            vd::gfx::Color c(g_frontBytes[i], g_frontBytes[i+1], g_frontBytes[i+2]);
+            return c.ChangeColorSpace(vd::gfx::Color::COLORSPACE_RGB).ToVector3();
         } else { // back
             // UV to pixel coordinates
             u = u - 1.f;
             int y = (int)vd::math::Min(g_backHeight-1, floorf(g_backHeight*v));
             int x = (int)vd::math::Min(g_backWidth-1, floorf(g_backWidth*u));
             int i = (int)(g_backStride*(g_backWidth*y + x));
-            float r = g_backBytes[i];
-            float g = g_backBytes[i+1];
-            float b = g_backBytes[i+2];
-            vd::math::Vector3 color(s*r, s*g, s*b);
-            return sRGBtoRGB(color);
+            vd::gfx::Color c(g_frontBytes[i], g_frontBytes[i+1], g_frontBytes[i+2]);
+            return c.ChangeColorSpace(vd::gfx::Color::COLORSPACE_RGB).ToVector3();
         }
     } // polarSampler
     
@@ -140,11 +110,11 @@ namespace {
                     // get irradiance for given direction
                     vd::math::Vector3 n(x,z,y);
                     vd::math::Vector3 irradiance = sh->GetIrradianceApproximation(n);
-                    vd::math::Vector3 c(0);
+                    vd::math::Vector4 c(1);
                     c(0) = vd::math::Clamp(irradiance.GetX() * vd::math::PI_INV, 0.f, 1.f);
                     c(1) = vd::math::Clamp(irradiance.GetY() * vd::math::PI_INV, 0.f, 1.f);
                     c(2) = vd::math::Clamp(irradiance.GetZ() * vd::math::PI_INV, 0.f, 1.f);
-                    c = RGBtosRGB(c);
+                    c = vd::gfx::Color(vd::gfx::Color::COLORSPACE_RGB, c).ChangeColorSpace(vd::gfx::Color::COLORSPACE_SRGB).ToVector4();
                     x = 255.f * c.GetX();
                     y = 255.f * c.GetY();
                     z = 255.f * c.GetZ();
