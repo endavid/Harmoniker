@@ -174,11 +174,11 @@ void SphericalHarmonics::computeIrradianceApproximationMatrices()
         m_mIrradiance[i](0,2) = k0 * m_pCoeffs[7](i);
         m_mIrradiance[i](0,3) = k1 * m_pCoeffs[3](i);
         m_mIrradiance[i](1,0) = k0 * m_pCoeffs[4](i);
-        m_mIrradiance[i](1,1) = k0 * m_pCoeffs[8](i);
+        m_mIrradiance[i](1,1) = -k0 * m_pCoeffs[8](i);
         m_mIrradiance[i](1,2) = k0 * m_pCoeffs[5](i);
         m_mIrradiance[i](1,3) = k1 * m_pCoeffs[1](i);
         m_mIrradiance[i](2,0) = k0 * m_pCoeffs[7](i);
-        m_mIrradiance[i](2,1) = k0 * m_pCoeffs[3](i);
+        m_mIrradiance[i](2,1) = k0 * m_pCoeffs[5](i);
         m_mIrradiance[i](2,2) = 3.f * k3 * m_pCoeffs[6](i);
         m_mIrradiance[i](2,3) = k1 * m_pCoeffs[2](i);
         m_mIrradiance[i](3,0) = k1 * m_pCoeffs[3](i);
