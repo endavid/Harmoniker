@@ -19,6 +19,8 @@
 @synthesize colorWell;
 
 namespace {
+    const double SRGB_GAMMA = 2.4;
+    
     size_t g_frontWidth = 0;
     size_t g_frontHeight = 0;
     size_t g_frontStride = 4;
@@ -32,6 +34,29 @@ namespace {
     const int IRRADIANCE_W = 32;
     const int IRRADIANCE_H = 32;
     const int IRRADIANCE_BANDS = 3;     ///< R,G,B
+    
+    
+    /// Converts sRGB to linear color space
+    vd::math::Vector3 sRGBtoRGB(const vd::math::Vector3& c) {
+        vd::math::Vector3 v(0);
+        for (int i=0; i<3; ++i) {
+            if ( c(i) > 0.04045 ) v(i) =(float)pow((c(i)+0.055)/1.055, SRGB_GAMMA);
+            else v(i) = (c(i) / 12.92f);
+        }
+		return v;
+	}
+    
+    /// Converts linear RGB to sRGB gamma space
+    vd::math::Vector3 RGBtosRGB(const vd::math::Vector3& c) {
+        vd::math::Vector3 v(0);
+        for (int i=0; i<3; ++i) {
+            if ( c(i) > 0.00304f )
+                v(i) =(float) (1.055 * pow(c(i),(1.0/SRGB_GAMMA)) - 0.055);
+            else
+                v(i) = (float)(12.92 * c(i));
+        }
+		return v;
+	}
     
     /**
      *  This sampler function uses 2 images as if they were projections on the front
@@ -57,7 +82,8 @@ namespace {
             float r = g_frontBytes[i];
             float g = g_frontBytes[i+1];
             float b = g_frontBytes[i+2];
-            return vd::math::Vector3(s*r, s*g, s*b);
+            vd::math::Vector3 color(s*r, s*g, s*b);
+            return sRGBtoRGB(color);
         } else { // back
             // UV to pixel coordinates
             u = u - 1.f;
@@ -67,7 +93,8 @@ namespace {
             float r = g_backBytes[i];
             float g = g_backBytes[i+1];
             float b = g_backBytes[i+2];
-            return vd::math::Vector3(s*r, s*g, s*b);
+            vd::math::Vector3 color(s*r, s*g, s*b);
+            return sRGBtoRGB(color);
         }
     } // polarSampler
     
@@ -113,9 +140,14 @@ namespace {
                     // get irradiance for given direction
                     vd::math::Vector3 n(x,z,y);
                     vd::math::Vector3 irradiance = sh->GetIrradianceApproximation(n);
-                    x = 255.f * vd::math::Clamp(irradiance.GetX() * vd::math::PI_INV, 0.f, 1.f);
-                    y = 255.f * vd::math::Clamp(irradiance.GetY() * vd::math::PI_INV, 0.f, 1.f);
-                    z = 255.f * vd::math::Clamp(irradiance.GetZ() * vd::math::PI_INV, 0.f, 1.f);
+                    vd::math::Vector3 c(0);
+                    c(0) = vd::math::Clamp(irradiance.GetX() * vd::math::PI_INV, 0.f, 1.f);
+                    c(1) = vd::math::Clamp(irradiance.GetY() * vd::math::PI_INV, 0.f, 1.f);
+                    c(2) = vd::math::Clamp(irradiance.GetZ() * vd::math::PI_INV, 0.f, 1.f);
+                    c = RGBtosRGB(c);
+                    x = 255.f * c.GetX();
+                    y = 255.f * c.GetY();
+                    z = 255.f * c.GetZ();
                 } else {
                     // for debugging
                     x = 127.5f * x + 127.5f;
